@@ -76,7 +76,6 @@ def trim_file(filename):
             output_file.write(trimmed_text)
 
 
-
 def is_text(filename):
     """Return True if file is a text file."""
     process = subprocess.Popen(['file', filename], stdout=subprocess.PIPE)
