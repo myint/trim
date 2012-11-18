@@ -21,10 +21,12 @@ with open('README.rst') as readme:
                license='Expat License',
                author='myint',
                url='https://github.com/myint/trim',
-               classifiers=['Intended Audience :: Developers',
-                            'Environment :: Console',
-                            'Programming Language :: Python :: 2',
-                            'Programming Language :: Python :: 3',
-                            'License :: OSI Approved :: MIT License'],
+               classifiers=[
+                   'Development Status :: 3 - Alpha',
+                   'Intended Audience :: Developers',
+                   'Environment :: Console',
+                   'Programming Language :: Python :: 2',
+                   'Programming Language :: Python :: 3',
+                   'License :: OSI Approved :: MIT License'],
                keywords='trim, format, trailing, whitespace',
                scripts=['trim'])
