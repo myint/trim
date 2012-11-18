@@ -18,9 +18,8 @@ class TrimTests(unittest.TestCase):
 abc
    123
 test
-""".lstrip(),
+""",
             trim.trim("""
-
 abc\t
    123\t      \t\t
 test
@@ -32,6 +31,9 @@ test
     def test_trim_with_empty_string(self):
         self.assertEqual('\n', trim.trim(''))
         self.assertEqual('\n', trim.trim('\n'))
+
+    def test_trim_should_leave_leading_whitespace(self):
+        self.assertEqual(' abc\n', trim.trim(' abc\n'))
 
     def test_is_text(self):
         self.assertTrue(trim.is_text(os.path.join(ROOT_DIR, 'README.rst')))
