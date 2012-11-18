@@ -1,0 +1,12 @@
+language: python
+
+python:
+    - "2.7"
+    - "pypy"
+    - "3.2"
+
+install:
+    - python setup.py --quiet install
+
+script:
+    - python test_trim.py
