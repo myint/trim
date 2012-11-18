@@ -12,10 +12,10 @@ Trims trailing whitespace from files.
 Usage
 -----
 
-Trim trailing whitespace on a single file::
+Modify a single file::
 
    $ trim example.py
 
-Recursively::
+Recursively modify files in a directory::
 
    $ trim .
