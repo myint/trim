@@ -66,6 +66,7 @@ def find_line_ending(source):
 
 
 def trim_file(filename):
+    """Remove trailing whitespace from a file in place."""
     with open(filename) as input_file:
         original_text = input_file.read()
 
@@ -83,7 +84,7 @@ def is_text(filename):
 
 
 def main():
-    """Tool main."""
+    """Main."""
     import argparse
     parser = argparse.ArgumentParser(description=__doc__, prog='trim')
     parser.add_argument('--version', action='version', version=__version__)
