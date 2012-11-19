@@ -28,5 +28,5 @@ with open('README.rst') as readme:
                    'Programming Language :: Python :: 2',
                    'Programming Language :: Python :: 3',
                    'License :: OSI Approved :: MIT License'],
-               keywords='trim, format, trailing, whitespace',
+               keywords='trim, strip, format, trailing, whitespace',
                scripts=['trim'])
