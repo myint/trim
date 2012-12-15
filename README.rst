@@ -4,8 +4,8 @@ trim
 
 Trims trailing whitespace from files.
 
-.. image:: https://secure.travis-ci.org/myint/trim.png
-   :target: https://secure.travis-ci.org/myint/trim
+.. image:: https://travis-ci.org/myint/trim.png
+   :target: https://travis-ci.org/myint/trim
    :alt: Build status
 
 -----
