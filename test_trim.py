@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """Test suite for trim."""
 
 import os
