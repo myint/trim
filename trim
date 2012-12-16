@@ -89,7 +89,7 @@ def is_text(filename):
     result = process.communicate()[0].decode('utf-8').lower()
 
     for encoding in ['ascii', 'utf-8 unicode']:
-        if re.match(r'.*:[^:]* ' + encoding + ' text\s*', result):
+        if re.match(r'.*:[^:]* ' + encoding + r' text\s*', result):
             return True
 
     return False
