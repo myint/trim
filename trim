@@ -86,8 +86,13 @@ def trim_file(filename):
 def is_text(filename):
     """Return True if file is a text file."""
     process = subprocess.Popen(['file', filename], stdout=subprocess.PIPE)
-    return re.match(r'.*:[^:]* ASCII text\s*',
-                    process.communicate()[0].decode('utf-8'))
+    result = process.communicate()[0].decode('utf-8').lower()
+
+    for encoding in ['ascii', 'utf-8 unicode']:
+        if re.match(r'.*:[^:]* ' + encoding + ' text\s*', result):
+            return True
+
+    return False
 
 
 def open_unicode_file(filename, mode='r'):
