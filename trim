@@ -73,13 +73,13 @@ def find_line_ending(source):
 
 def trim_file(filename):
     """Remove trailing whitespace from a file in place."""
-    with open(filename) as input_file:
+    with open_unicode_file(filename) as input_file:
         original_text = input_file.read()
 
     trimmed_text = trim(original_text)
 
     if trimmed_text != original_text:
-        with open(filename, 'w') as output_file:
+        with open_unicode_file(filename, 'w') as output_file:
             output_file.write(trimmed_text)
 
 
@@ -88,6 +88,13 @@ def is_text(filename):
     process = subprocess.Popen(['file', filename], stdout=subprocess.PIPE)
     return re.match(r'.*:[^:]* ASCII text\s*',
                     process.communicate()[0].decode('utf-8'))
+
+
+def open_unicode_file(filename, mode='r'):
+    """Return opened Unicode file."""
+    import io
+    return io.open(filename, mode=mode, encoding='utf-8',
+                   newline='')  # Preserve line endings
 
 
 def main():
