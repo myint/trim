@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Setup for trim."""
 
+import ast
 from distutils import core
 
 
@@ -9,8 +10,7 @@ def version():
     with open('trim') as input_file:
         for line in input_file:
             if line.startswith('__version__'):
-                import ast
-                return ast.literal_eval(line.split('=')[1].strip())
+                return ast.parse(line).body[0].value.s
 
 
 with open('README.rst') as readme:
@@ -19,7 +19,7 @@ with open('README.rst') as readme:
                description='Trims trailing whitespace from files.',
                long_description=readme.read(),
                license='Expat License',
-               author='myint',
+               author='Steven Myint',
                url='https://github.com/myint/trim',
                classifiers=[
                    'Development Status :: 3 - Alpha',
