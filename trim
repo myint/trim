@@ -74,7 +74,11 @@ def find_line_ending(source):
 
 
 def trim_file(filename):
-    """Remove trailing whitespace from a file in place."""
+    """Remove trailing whitespace from a file in place.
+
+    Return True if file is modified.
+
+    """
     with open_unicode_file(filename) as input_file:
         original_text = input_file.read()
 
@@ -84,15 +88,18 @@ def trim_file(filename):
         with open_unicode_file(filename, 'w') as output_file:
             output_file.write(trimmed_text)
 
+        return True
+
+    return False
+
 
 def is_text(filename):
     """Return True if file is a text file."""
     process = subprocess.Popen(['file', filename], stdout=subprocess.PIPE)
     result = process.communicate()[0].decode('utf-8').lower()
 
-    for encoding in ['ascii', 'utf-8 unicode']:
-        if re.match(r'.*:[^:]* ' + encoding + r' text\s*', result):
-            return True
+    if re.match(r'.*:[^:]* .* text\s*', result):
+        return True
 
     return False
 
@@ -125,15 +132,12 @@ def main():
                 for d in directories:
                     if d.startswith('.'):
                         directories.remove(d)
-        elif is_text(name):
-            print('[file:%s]' % name, file=sys.stderr)
-            try:
-                trim_file(name)
-            except IOError as error:
-                print(str(error), file=sys.stderr)
         else:
-            # Ignore binary files.
-            pass
+            try:
+                if is_text(name) and trim_file(name):
+                    print('[file:%s]' % name, file=sys.stderr)
+            except (IOError, UnicodeDecodeError) as error:
+                print('{0}:{1}'.format(name, error), file=sys.stderr)
 
 
 if __name__ == '__main__':
