@@ -129,9 +129,9 @@ def main():
             for root, directories, children in os.walk(name):
                 filenames += [os.path.join(root, f) for f in children
                               if not f.startswith('.')]
-                for d in directories:
-                    if d.startswith('.'):
-                        directories.remove(d)
+
+                directories[:] = [d for d in directories
+                                  if not d.startswith('.')]
         else:
             try:
                 if is_text(name) and trim_file(name):
