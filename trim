@@ -119,7 +119,7 @@ def is_text(filename):
                 return True
             if len(string.split()[0]) > max_expected_line_length:
                 return False
-    except (IndexError, IOError, UnicodeDecodeError):
+    except (IOError, UnicodeDecodeError):
         return False
 
     return True
