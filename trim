@@ -92,16 +92,25 @@ def trim_file(filename):
 
 
 def is_text(filename):
-    """Return True if file is a text file."""
+    """Return True if file is a text file.
+
+    This is a guess. Files with null bytes are considered to be binary. Also,
+    files that start with an extremely long line are considered to be binary.
+
+    """
     if os.path.islink(filename):
         return False
 
     try:
         with open_unicode_file(filename) as input_file:
-            string = input_file.read(1024)
-            if '\x00' in string:
+            max_read = 1024
+            string = input_file.read(max_read)
+
+            max_expected_line_length = 200
+            if (len(string.split()[0]) > max_expected_line_length or
+                    '\x00' in string):
                 return False
-    except (IOError, UnicodeDecodeError):
+    except (IndexError, IOError, UnicodeDecodeError):
         return False
 
     return True
