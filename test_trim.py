@@ -57,6 +57,14 @@ test
 
             self.assertTrue(trim.is_text(temporary_file.name))
 
+    def test_is_text_should_consider_empty_files_as_non_text(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w') as temporary_file:
+            temporary_file.write('')
+            temporary_file.flush()
+
+            self.assertFalse(trim.is_text(temporary_file.name))
+
     def test_system(self):
         text = 'abc   \n   1234  \n\n  \n'
         import tempfile

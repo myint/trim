@@ -96,6 +96,7 @@ def is_text(filename):
 
     This is a guess. Files with null bytes are considered to be binary. Also,
     files that start with an extremely long line are considered to be binary.
+    Empty files are considered as not text.
 
     """
     if os.path.islink(filename):
@@ -105,6 +106,9 @@ def is_text(filename):
         with open_unicode_file(filename) as input_file:
             max_read = 1024
             string = input_file.read(max_read)
+
+            if not string:
+                return False
 
             if '\x00' in string:
                 return False
