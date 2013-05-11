@@ -49,6 +49,14 @@ test
     def test_is_text_should_consider_symlinks_as_non_text(self):
         self.assertFalse(trim.is_text(os.path.join(ROOT_DIR, 'trim.py')))
 
+    def test_is_text_should_consider_whitespace_only_as_text(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w') as temporary_file:
+            temporary_file.write('     ')
+            temporary_file.flush()
+
+            self.assertTrue(trim.is_text(temporary_file.name))
+
     def test_system(self):
         text = 'abc   \n   1234  \n\n  \n'
         import tempfile

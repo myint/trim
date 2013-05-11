@@ -106,9 +106,14 @@ def is_text(filename):
             max_read = 1024
             string = input_file.read(max_read)
 
+            if '\x00' in string:
+                return False
+
             max_expected_line_length = 200
-            if (len(string.split()[0]) > max_expected_line_length or
-                    '\x00' in string):
+            split_string = string.split()
+            if not split_string:
+                return True
+            if len(string.split()[0]) > max_expected_line_length:
                 return False
     except (IndexError, IOError, UnicodeDecodeError):
         return False
