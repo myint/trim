@@ -40,7 +40,11 @@ test
     def test_is_text(self):
         self.assertTrue(trim.is_text(os.path.join(ROOT_DIR, 'README.rst')))
         self.assertTrue(trim.is_text(os.path.join(ROOT_DIR, 'trim')))
+
         self.assertFalse(trim.is_text(sys.executable))
+        self.assertFalse(trim.is_text('/bin/bash'))
+        self.assertFalse(trim.is_text('/usr/bin/env'))
+        self.assertFalse(trim.is_text('non_existent_file'))
 
     def test_is_text_should_consider_symlinks_as_non_text(self):
         self.assertFalse(trim.is_text(os.path.join(ROOT_DIR, 'trim.py')))

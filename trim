@@ -26,8 +26,6 @@
 from __future__ import print_function
 
 import os
-import re
-import subprocess
 import sys
 
 try:
@@ -95,13 +93,18 @@ def trim_file(filename):
 
 def is_text(filename):
     """Return True if file is a text file."""
-    process = subprocess.Popen(['file', filename], stdout=subprocess.PIPE)
-    result = process.communicate()[0].decode('utf-8').lower()
+    if os.path.islink(filename):
+        return False
 
-    if re.match(r'.*:[^:]* .* text\s*', result):
-        return True
+    try:
+        with open_unicode_file(filename) as input_file:
+            string = input_file.read(1024)
+            if '\x00' in string:
+                return False
+    except (IOError, UnicodeDecodeError):
+        return False
 
-    return False
+    return True
 
 
 def open_unicode_file(filename, mode='r'):
