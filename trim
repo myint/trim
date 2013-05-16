@@ -24,14 +24,11 @@
 """Trims trailing whitespace from files."""
 
 from __future__ import print_function
+from __future__ import unicode_literals
 
+import io
 import os
 import sys
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
 
 
 __version__ = '0.2.1'
@@ -44,7 +41,7 @@ CRLF = '\r\n'
 
 def trim(text):
     """Return trailing whitespace removed."""
-    split_lines = StringIO(text).readlines()
+    split_lines = io.StringIO(text).readlines()
     line_ending = find_line_ending(split_lines)
     return line_ending.join(
         [line.rstrip() for line in split_lines]).rstrip() + line_ending

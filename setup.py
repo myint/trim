@@ -1,5 +1,8 @@
 #!/usr/bin/env python
+
 """Setup for trim."""
+
+from __future__ import unicode_literals
 
 import ast
 from distutils import core
