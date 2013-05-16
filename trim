@@ -119,7 +119,6 @@ def is_text(filename):
 
 def open_unicode_file(filename, mode='r'):
     """Return opened Unicode file."""
-    import io
     return io.open(filename, mode=mode, encoding='utf-8',
                    newline='')  # Preserve line endings
 
