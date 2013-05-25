@@ -6,8 +6,4 @@ check:
 	scspell trim.py setup.py test_trim.py README.rst
 
 readme:
-	@restview --long-description
-
-register:
-	@python setup.py register sdist upload
-	@srm ~/.pypirc
+	@restview --long-description --strict
