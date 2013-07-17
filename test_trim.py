@@ -75,8 +75,7 @@ test
             temporary_file.write(text)
 
         import subprocess
-        process = subprocess.Popen([sys.executable,
-                                    os.path.join(ROOT_DIR, 'trim'),
+        process = subprocess.Popen([os.path.join(ROOT_DIR, 'trim'),
                                     temporary_file.name],
                                    stderr=subprocess.PIPE)
         process.communicate()
