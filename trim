@@ -39,6 +39,12 @@ LF = '\n'
 CRLF = '\r\n'
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 def trim(text):
     """Return trailing whitespace removed."""
     split_lines = io.StringIO(text).readlines()
@@ -138,7 +144,7 @@ def main():
     while filenames:
         name = filenames.pop(0)
         if os.path.isdir(name):
-            for root, directories, children in os.walk(name):
+            for root, directories, children in os.walk(unicode(name)):
                 filenames += [os.path.join(root, f) for f in children
                               if not f.startswith('.')]
 
