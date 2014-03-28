@@ -97,9 +97,9 @@ def trim_file(filename):
 def is_text(filename):
     """Return True if file is a text file.
 
-    This is a guess. Files with null bytes are considered to be binary. Also,
-    files that start with an extremely long line are considered to be binary.
-    Empty files are considered as not text.
+    This is a guess. Files with null bytes are considered to be binary.
+    Also, files that start with an extremely long line are considered to
+    be binary. Empty files are considered as not text.
 
     """
     if os.path.islink(filename):
