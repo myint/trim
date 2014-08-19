@@ -49,13 +49,14 @@ def trim(text, leading=False):
     """Return trailing whitespace removed."""
     split_lines = io.StringIO(text).readlines()
     line_ending = find_line_ending(split_lines)
-    without_trailing_whitespace = line_ending.join(
+
+    without_trailing = line_ending.join(
         [line.rstrip() for line in split_lines]).rstrip() + line_ending
 
     if leading:
-        without_trailing_whitespace = without_trailing_whitespace.lstrip('\n')
+        without_trailing = without_trailing.lstrip(line_ending)
 
-    return without_trailing_whitespace
+    return without_trailing
 
 
 def find_line_ending(source):
