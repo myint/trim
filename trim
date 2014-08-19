@@ -31,7 +31,7 @@ import os
 import sys
 
 
-__version__ = '0.2.1'
+__version__ = '0.3'
 
 
 CR = '\r'
@@ -45,12 +45,17 @@ except NameError:
     unicode = str
 
 
-def trim(text):
+def trim(text, leading=False):
     """Return trailing whitespace removed."""
     split_lines = io.StringIO(text).readlines()
     line_ending = find_line_ending(split_lines)
-    return line_ending.join(
+    without_trailing_whitespace = line_ending.join(
         [line.rstrip() for line in split_lines]).rstrip() + line_ending
+
+    if leading:
+        without_trailing_whitespace = without_trailing_whitespace.lstrip('\n')
+
+    return without_trailing_whitespace
 
 
 def find_line_ending(source):
@@ -74,8 +79,10 @@ def find_line_ending(source):
         return LF
 
 
-def trim_file(filename):
+def trim_file(filename, leading=False):
     """Remove trailing whitespace from a file in place.
+
+    Remove leading newlines of "leading" is True.
 
     Return True if file is modified.
 
@@ -83,7 +90,7 @@ def trim_file(filename):
     with open_unicode_file(filename) as input_file:
         original_text = input_file.read()
 
-    trimmed_text = trim(original_text)
+    trimmed_text = trim(original_text, leading=leading)
 
     if trimmed_text != original_text:
         with open_unicode_file(filename, 'w') as output_file:
@@ -133,6 +140,8 @@ def main():
     """Main."""
     import argparse
     parser = argparse.ArgumentParser(description=__doc__, prog='trim')
+    parser.add_argument('--leading-newlines', action='store_true',
+                        help='remove leading newlines too')
     parser.add_argument('--version', action='version',
                         version='%(prog)s ' + __version__)
     parser.add_argument('files', nargs='+',
@@ -152,7 +161,8 @@ def main():
                                   if not d.startswith('.')]
         else:
             try:
-                if is_text(name) and trim_file(name):
+                if is_text(name) and trim_file(name,
+                                               leading=args.leading_newlines):
                     print('[file:%s]' % name, file=sys.stderr)
             except (IOError, UnicodeDecodeError) as error:
                 print('{0}:{1}'.format(name, error), file=sys.stderr)
