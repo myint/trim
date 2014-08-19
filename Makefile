@@ -7,7 +7,7 @@ check:
 		--disable=C0103 \
 		--rcfile=/dev/null \
 		trim.py setup.py
-	python setup.py --long-description | rst2html --strict > /dev/null
+	python setup.py --long-description | rstcheck -
 	scspell trim.py setup.py test_trim.py README.rst
 
 readme:
