@@ -86,7 +86,7 @@ def find_line_ending(source):
 def trim_file(filename, leading=False):
     """Remove trailing whitespace from a file in place.
 
-    Remove leading newlines of "leading" is True.
+    Remove leading newlines if "leading" is True.
 
     Return True if file is modified.
 
