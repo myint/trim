@@ -38,6 +38,9 @@ CR = '\r'
 LF = '\n'
 CRLF = '\r\n'
 
+MAX_READ = 1024
+MAX_LINE_LENGTH = 200
+
 
 try:
     unicode
@@ -115,15 +118,13 @@ def is_text(filename):
 
     try:
         with open_unicode_file(filename) as input_file:
-            max_read = 1024
-            string = input_file.read(max_read)
+            string = input_file.read(MAX_READ)
 
             if not string or '\x00' in string:
                 return False
 
-            max_line_length = 200
             split_string = string.split()
-            if split_string and len(split_string[0]) > max_line_length:
+            if split_string and len(split_string[0]) > MAX_LINE_LENGTH:
                 return False
     except (IOError, UnicodeDecodeError):
         return False
