@@ -31,7 +31,7 @@ import os
 import sys
 
 
-__version__ = '0.3'
+__version__ = '0.4'
 
 
 CR = '\r'
@@ -83,12 +83,12 @@ def find_line_ending(source):
         return LF
 
 
-def trim_file(filename, leading=False):
+def trim_file(filename, leading=False, check=False):
     """Remove trailing whitespace from a file in place.
 
     Remove leading newlines if "leading" is True.
 
-    Return True if file is modified.
+    Return True if file is trimmeded or need trimming.
 
     """
     with open_unicode_file(filename) as input_file:
@@ -97,8 +97,9 @@ def trim_file(filename, leading=False):
     trimmed_text = trim(original_text, leading=leading)
 
     if trimmed_text != original_text:
-        with open_unicode_file(filename, 'w') as output_file:
-            output_file.write(trimmed_text)
+        if not check:
+            with open_unicode_file(filename, 'w') as output_file:
+                output_file.write(trimmed_text)
 
         return True
 
@@ -146,6 +147,8 @@ def main():
                         help='remove leading newlines too')
     parser.add_argument('--version', action='version',
                         version='%(prog)s ' + __version__)
+    parser.add_argument('--check', action='store_true',
+                        help='not override files, only check')
     parser.add_argument('files', nargs='+',
                         help='files to trim')
 
@@ -164,8 +167,12 @@ def main():
         else:
             try:
                 if is_text(name) and trim_file(name,
-                                               leading=args.leading_newlines):
-                    print('[file:%s]' % name, file=sys.stderr)
+                                               leading=args.leading_newlines,
+                                               check=args.check):
+                    if args.check:
+                        print('[file:%s] need trimming' % name, file=sys.stderr)
+                    else:
+                        print('[file:%s] was trimmed' % name, file=sys.stderr)
             except (IOError, UnicodeDecodeError) as error:
                 print('{0}:{1}'.format(name, error), file=sys.stderr)
 
